@@ -18,11 +18,11 @@ while continuar == "S":
                 dimensao=0
                 dimensao=int(input(' A dimensão tem que ser maior que 3 : '))
 
-        tiros=int(input(' Deseja ter quantos Tiros: '))
+        tiros=int(input('Deseja ter quantos Tiros: '))
         while True:
-                navios=  int(input("Digite a quantidade os navios: "))
+                navios= int(input("Digite a quantidade os navios: "))
                 if navios > dimensao:
-                        print ('Quantidade maxima de navios excedida')
+                        print ('Quantidade maxima de navios excedida. \nMáximo permitido é de %d' % dimensao)
                 else:
                         break
         print('Tentativas restantes: %d' % tiros)
@@ -39,22 +39,38 @@ while continuar == "S":
                 campo_de_batalha.append([])
                 espelho.append([])
                 for j in range(dimensao):
-                    campo_de_batalha[i].append(random.randint(0,1))
+                    campo_de_batalha[i].append(0)
                     espelho[i].append('*')
+
+        #adiciona os navios
+        for ship in range (navios+1):
+            xis=random.randint(1,dimensao)
+            if xis == dimensao:
+                xis-=1
+            ypisilone=random.randint(1,dimensao)
+            if ypisilone == dimensao:
+                ypisilone-=1
+            if campo_de_batalha[ypisilone][xis]==0:
+                campo_de_batalha[ypisilone][xis]=1
+
+        '''exibe o campo de batalha
+        for i in range (dimensao):
+            print(campo_de_batalha[i])'''
+                
                         
-        #loop para o usuario digitar as cordenadas e uns IF no caso de o usuario digitar uma coordenada diferente  da dimensao
+        #loop para o usuario digitar as cordenadas e uns IF no caso de o usuario digitar uma coordenada diferente da dimensao
         while tiros > 0:
             tiros-=1
-            cord_x=int(input('Digite a coordenada  X: '))
-            if  cord_x >dimensao:
-                cord_x=int(input('Digite a coordenada  X novamente, menor que a dimensão:'))
+            cord_x=int(input('Digite a coordenada X: '))
+            if cord_x >dimensao:
+                cord_x=int(input('Digite a coordenada X novamente, menor que a dimensão:'))
             cord_x-=1
-            cord_y=int(input('Digite a coordenada  Y: '))
-            if  cord_y >dimensao:
-                cord_y=int(input('Digite a coordenada  Y novamente menor que a dimensão: '))
+            cord_y=int(input('Digite a coordenada Y: '))
+            if cord_y >dimensao:
+                cord_y=int(input('Digite a coordenada Y novamente menor que a dimensão: '))
             cord_y-=1
             
-            #condicional para o caso de ele acertar  
+            #condicional para o caso de ele acertar
             if campo_de_batalha[cord_x][cord_y] == 1:
                 print('KABUM!:-D, Você ACERTOU!' )
                 print('Tentativas restantes: %d' % tiros)
@@ -62,7 +78,7 @@ while continuar == "S":
                 espelho[cord_x][cord_y]='@'
                 for x in range(dimensao):
                    print(espelho[x])
-            #condicional para o caso de ele errar   
+            #condicional para o caso de ele errar
             if campo_de_batalha[cord_x][cord_y] == 0:
                 espelho[cord_x][cord_y]='%'
                 print('splash :/ ,Você ERROU')
@@ -72,8 +88,4 @@ while continuar == "S":
                     print(espelho[x])
         continuar = input("deseja continuar ?(S/N) Deve-se digitar apenas S ou N: ")
         if continuar!="N" or "S":
-                exit         
-
-        
-                    
-            
+                exit
